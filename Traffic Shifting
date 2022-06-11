@@ -1,0 +1,18 @@
+virtual_hosts:
+   - name: www2
+     domains:
+     - '*'
+     routes:
+       - match:
+           prefix: /
+           runtime_fraction:
+             default_value:
+               numerator: 50
+               denominator: HUNDRED
+             runtime_key: routing.traffic_shift.helloworld
+         route:
+           cluster: helloworld_v1
+       - match:
+           prefix: /
+         route:
+           cluster: helloworld_v2
